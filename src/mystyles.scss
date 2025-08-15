@@ -1,0 +1,12 @@
+$background-color: rgba(238, 255, 0, 0.89);
+$color: black;
+
+.estiloSass {
+  background-color: $background-color;
+  font: 32px sans-serif;
+  color: $color;
+}
+
+img {
+  width: 300px;
+}

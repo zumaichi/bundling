@@ -7,7 +7,11 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 export default {
   context: path.resolve(__dirname, "./src"),
+  resolve: {
+    extensions: [".js", ".jsx"],
+  },
   entry: {
+    appReact: "./index.jsx",
     app: "./index.js",
     vendorStyles: ["../node_modules/bootstrap/dist/css/bootstrap.css"],
   },
@@ -18,6 +22,11 @@ export default {
   module: {
     rules: [
       {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: "babel-loader",
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "babel-loader",
@@ -27,7 +36,7 @@ export default {
         exclude: /node_modules/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
-       {
+      {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
@@ -35,10 +44,10 @@ export default {
         test: /\.(png|jpg)$/,
         type: "asset/resource",
       },
-      { 
+      {
         test: /\.html$/,
         loader: "html-loader",
-      }
+      },
     ],
   },
   devServer: {

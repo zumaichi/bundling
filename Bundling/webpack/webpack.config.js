@@ -8,9 +8,10 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 export default {
   context: path.resolve(__dirname, "./src"),
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js", "ts", ".jsx", ".tsx"],
   },
   entry: {
+    appTypescript: "./index.tsx",
     appReact: "./index.jsx",
     app: "./index.js",
     vendorStyles: ["../node_modules/bootstrap/dist/css/bootstrap.css"],
@@ -21,6 +22,11 @@ export default {
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        loader: "babel-loader",
+      },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -50,8 +56,12 @@ export default {
       },
     ],
   },
+  devtool: "eval-source-map",
   devServer: {
     port: 8080,
+    devMiddleware: {
+      stats: "errors-only",
+    },
   },
 
   plugins: [

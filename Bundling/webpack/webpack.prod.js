@@ -1,4 +1,4 @@
-import { merge } from "webpack-merge"; 
+import { merge } from "webpack-merge";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import common from "./webpack.common.js";
 
@@ -19,6 +19,7 @@ export default merge(common, {
             loader: "css-loader",
             options: {
               modules: {
+                localIdentName: "[path][name]__[local]--[hash:base64:5]",
                 exportLocalsConvention: "camelCase",
               },
             },

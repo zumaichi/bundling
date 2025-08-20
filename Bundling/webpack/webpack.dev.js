@@ -27,6 +27,10 @@ export default merge(common, {
           "sass-loader",
         ],
       },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
   stats: "errors-only",

@@ -1,5 +1,5 @@
 {
-  "name": "webpack",
+  "name": "webpack-project",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,8 +8,10 @@
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "start:dev": "webpack serve --config webpack.dev.js",
+    "start:prod": "webpack serve --config webpack.prod.js",
     "build:dev": "webpack --config webpack.dev.js",
-    "build:prod": "webpack --config webpack.prod.js"
+    "build:prod": "webpack --config webpack.prod.js",
+    "build:perf": "npm run type-check && webpack --config webpack.perf.js"
   },
   "keywords": [],
   "author": "",
@@ -33,12 +35,14 @@
     "style-loader": "^4.0.0",
     "typescript": "^5.9.2",
     "webpack": "^5.101.1",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2",
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
     "bootstrap": "^5.3.7",
+    "react": "^19.1.1",
     "react-dom": "^19.1.1"
   }
 }

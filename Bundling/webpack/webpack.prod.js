@@ -8,27 +8,34 @@ export default merge(common, {
     filename: "js/[name].[chunkhash].js",
     assetModuleFilename: "images/[hash][ext][query]",
   },
-  module: {
-    rules: [
-      {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: {
-              modules: {
-                localIdentName: "[path][name]__[local]--[hash:base64:5]",
-                exportLocalsConvention: "camelCase",
-              },
+module: {
+  rules: [
+    {
+      test: /\.css$/, 
+      use: [
+        MiniCssExtractPlugin.loader,
+       
+      ],
+    },
+    {
+      test: /\.scss$/,
+      exclude: /node_modules/,
+      use: [
+        MiniCssExtractPlugin.loader,
+        {
+          loader: "css-loader",
+          options: {
+            modules: {
+              localIdentName: "[path][name]__[local]--[hash:base64:5]",
+              exportLocalsConvention: "camelCase",
             },
           },
-          "sass-loader",
-        ],
-      },
-    ],
-  },
+        },
+        "sass-loader",
+      ],
+    },
+  ],
+},
   plugins: [
     new MiniCssExtractPlugin({
       filename: "css/[name].[chunkhash].css",

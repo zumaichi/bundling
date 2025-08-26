@@ -2,6 +2,7 @@ import { merge } from "webpack-merge";
 import common from "./webpack.common.js";
 import path from "path";
 import url from "url";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
@@ -13,7 +14,7 @@ export default merge(common, {
         test: /\.scss$/,
         exclude: /node_modules/,
         use: [
-          "style-loader",
+          MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: {
@@ -29,7 +30,7 @@ export default merge(common, {
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },

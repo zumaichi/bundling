@@ -1,4 +1,5 @@
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import path from "path";
 import url from "url";
 
@@ -10,17 +11,16 @@ export default {
     extensions: [".js", ".ts", ".jsx", ".tsx"],
   },
   entry: {
-    appTypescript: "./index.tsx",
-    appReact: "./index.jsx",
-    app: "./index.js",
-    
+    appTypescript: {
+      import: './index.tsx'
+    },
+   
   },
-output: {
-  path: path.resolve(__dirname, "./dist"),
-  filename: "[name].bundle.js",
-  clean: true,  
-}, 
-  
+  output: {
+    path: path.resolve(__dirname, "./dist"),
+    filename: "[name].bundle.js",
+    clean: true,  
+  }, 
   module: {
     rules: [
       {
@@ -36,13 +36,21 @@ output: {
         test: /\.html$/,
         loader: "html-loader",
       },
+      {
+        test: /\.css$/, 
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
-      template: "./index.html",
+      template: "index.html",
       scriptLoading: "blocking",
     }),
+   new MiniCssExtractPlugin({
+        filename: "[name].css",
+        chunkFilename: "[id].css",
+      }),
   ],
 };

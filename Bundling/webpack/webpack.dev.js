@@ -1,20 +1,21 @@
-import { merge } from "webpack-merge";
-import common from "./webpack.common.js";
-import path from "path";
-import url from "url";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.js");
+const path = require("path");
+const Dotenv = require('dotenv-webpack');
 
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-
-export default merge(common, {
+module.exports = merge(common, {
   mode: "development",
   module: {
     rules: [
+        {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
       {
         test: /\.scss$/,
         exclude: /node_modules/,
         use: [
-          MiniCssExtractPlugin.loader,
+          "style-loader",
           {
             loader: "css-loader",
             options: {
@@ -28,10 +29,7 @@ export default merge(common, {
           "sass-loader",
         ],
       },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
-      },
+    
     ],
   },
   stats: "errors-only",
@@ -39,4 +37,10 @@ export default merge(common, {
   devServer: {
     port: 8080,
   },
+
+ plugins: [
+    new Dotenv({
+      path: "./dev.env",
+    }),
+  ],
 });

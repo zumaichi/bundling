@@ -13,7 +13,7 @@ module: {
     {
       test: /\.css$/, 
       use: [
-        MiniCssExtractPlugin.loader,
+        MiniCssExtractPlugin.loader,"css-loader"
        
       ],
     },
@@ -43,3 +43,4 @@ module: {
     }),
   ],
 });
+

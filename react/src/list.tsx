@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Button, TextField, Pagination } from "@mui/material";
 
 interface MemberEntity {
   id: string;
@@ -12,17 +13,20 @@ export const ListPage: React.FC = () => {
   const [org, setOrg] = React.useState(
     () => localStorage.getItem("org") || "lemoncode"
   );
-
-  React.useEffect(() => {
-    fetchMembers(org);
-  }, [org]);
+  const [page, setPage] = React.useState(1);
 
   const fetchMembers = (organization: string) => {
-    fetch(`https://api.github.com/orgs/${organization}/members`)
+    fetch(
+      `https://api.github.com/orgs/${organization}/members?page=${page}&per_page=10`
+    )
       .then((response) => response.json())
       .then((json) => (Array.isArray(json) ? setMembers(json) : setMembers([])))
       .catch(() => setMembers([]));
   };
+
+  React.useEffect(() => {
+    fetchMembers(org);
+  }, [org, page]);
 
   const handleSearch = () => {
     localStorage.setItem("org", org);
@@ -33,12 +37,12 @@ export const ListPage: React.FC = () => {
     <>
       <h2>Hello from List page</h2>
       <div>
-        <input
-          type="text"
+        <TextField
           value={org}
           onChange={(e) => setOrg(e.target.value)}
+          label="Organización"
         />
-        <button onClick={handleSearch}>Buscar</button>
+        <Button onClick={handleSearch}>Buscar</Button>
       </div>
       <div className="list-user-list-container">
         <span className="list-header">Avatar</span>
@@ -51,6 +55,17 @@ export const ListPage: React.FC = () => {
             <Link to={`/detail/${member.login}`}>{member.login}</Link>
           </React.Fragment>
         ))}
+      </div>
+      <div>
+        <Pagination
+          count={3}
+          page={page}
+          onChange={(e, value) => setPage(value)}
+        />
+        <button onClick={() => setPage(page - 1)} disabled={page === 1}>
+          Anterior
+        </button>
+        <button onClick={() => setPage(page + 1)}>Siguiente</button>
       </div>
       <Link to="/detail">Navigate to detail page</Link>
     </>
